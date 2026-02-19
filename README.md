@@ -19,8 +19,9 @@ Ante cualquier error o sugerencia, por favor, contáctame en mi correo:
 
 ## 📝 Tabla de contenidos
 
+0. 🏁 [Manual de instalación del servidor personal en la nube](manual/README.md)
 1. 🌐 [Laboratorio 01: **HTTP**](labo01/README.md)
-   1. 🧪 Laboratorio 01.1: **Postman** — **próximamente**
+   1. [🧪 Laboratorio 01.1: **Postman**](labo01.1/README.md)
 2. 🧱 Laboratorio 02: **HTML** — **próximamente**
 3. 🎨 Laboratorio 03: **CSS** — **próximamente**
 4. 🧩 Laboratorio 04: **Bootstrap** — **próximamente**
