@@ -68,6 +68,8 @@ En Windows, abre **Git Bash** o la **Consola de Windows (cmd/PowerShell)**.
 🔹 **Paso 2: Conectarte a la máquina virtual**  
 Ejecuta el siguiente comando, reemplazando los valores según tu configuración:
 
+> ⚠️ **Nota sobre redes (eduroam / WiFi públicas)**: se recomienda hacer la conexión SSH desde una red “estable” (WiFi de casa, oficina o por cable). Ten en cuenta que muchas redes (especialmente **eduroam**) y algunas WiFis públicas (residencias de estudiantes, aeropuertos, hoteles, etc.) **pueden bloquear puertos que no sean “well-known”**. En la conexión SSH para el servidor personal en la nube de FTI el **puerto no es estándar**, la conexión puede fallar si la red lo filtra. Si te ocurre, prueba otra red.
+
 ```sh
 ssh -p PUERTO_SSH usuario@virtual.infor.uva.es 
 ```
