@@ -22,7 +22,7 @@ Ante cualquier error o sugerencia, por favor, contáctame en mi correo:
 0. 🏁 [Manual de instalación del servidor personal en la nube](manual/README.md)
 1. 🌐 [Laboratorio 01: **HTTP**](labo01/README.md)
    1. [🧪 Laboratorio 01.1: **Postman**](labo01.1/README.md)
-2. 🧱 Laboratorio 02: **HTML** — **próximamente**
+2. [🧱 Laboratorio 02: **HTML**](labo02/README.md)
 3. 🎨 Laboratorio 03: **CSS** — **próximamente**
 4. 🧩 Laboratorio 04: **Bootstrap** — **próximamente**
 5. 🧠 Laboratorios 05: **JavaScript** — **próximamente**
