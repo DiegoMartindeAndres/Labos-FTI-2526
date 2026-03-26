@@ -57,7 +57,7 @@ Pero hay un matiz importante: el motor hace dos “pasadas” conceptuales:
 1. **Fase de creación (preparación)** (a veces se habla de *hoisting*)
     - Se registran **declaraciones de funciones** (p. ej. `function f() {}`) y quedan disponibles “desde el principio”.
     - Se preparan variables declaradas con `var` (existen desde el inicio, pero empiezan con `undefined`).
-   - Se preparan `let` y `const`, pero quedan en una zona especial (la **Temporal Dead Zone** o **TDZ**) hasta que el flujo de ejecución llega a su línea.
+    - Se preparan `let` y `const`, pero quedan en una zona especial (la **temporal dead zone**) hasta que el flujo de ejecución llega a su línea.
 
 2. **Fase de ejecución (línea a línea)**
     - Se van ejecutando las instrucciones **en el orden en que aparecen**.
@@ -394,27 +394,23 @@ Piensa en cómo calcular la **distancia** entre cada número y el 100.
 ## 🗓️ Ejercicio 3 - Determinar si un año es bisiesto en el calendario gregoriano
 
 ### Descripción del problema
-Un año bisiesto en el calendario gregoriano es aquel que tiene **366 días** en lugar de los **365** habituales. Esto se logra añadiendo un día extra al mes de febrero, que pasa a tener 29 días.
+Un año bisiesto en el calendario gregoriano es aquel que tiene 366 días en lugar de los 365 habituales. Esto se logra añadiendo un día extra al mes de febrero, que pasa a tener 29 días. Los años bisiestos se introdujeron para mantener la sincronización del calendario con el año astronómico o estacional
+Para determinar si un año es bisiesto, se siguen estas reglas
 
-Los años bisiestos se introdujeron para mantener la sincronización del calendario con el año astronómico o estacional.
-
-📌 Para determinar si un año es bisiesto, se siguen estas reglas:
-
-1. Si el año es divisible por 4, pasa al paso 2. De lo contrario, **no es bisiesto**.
-2. Si el año es divisible por 100, pasa al paso 3. De lo contrario, **es bisiesto**.
-3. Si el año es divisible por 400, **es bisiesto**. De lo contrario, **no es bisiesto**.
-
-💡 Ejemplo: los años 2000 y 2016 son bisiestos, mientras que 1700, 1800 y 1900 no lo son.
+1. Si el año es divisible por 4, pasa al paso 2. De lo contrario, no es bisiesto
+2. Si el año es divisible por 100, pasa al paso 3. De lo contrario, es bisiesto
+3. Si el año es divisible por 400, es bisiesto. De lo contrario, no es bisiesto
+Por ejemplo, los años 2000 y 2016 son bisiestos, mientras que 1700, 1800 y 1900 no lo son
 
 ### Entrada y salida esperadas
 
-- **Entrada:** Un número entero que representa el año (por ejemplo, 2024)
+- **Entrada:** Un número entero que representa el año (por ejemplo, 2026)
 - **Salida:** Un valor booleano: `true` si el año es bisiesto, `false` en caso contrario
 
 **Ejemplo:**
 
 ```javascript
-esBisiesto(2024);
+esBisiesto(2026);
 ```
 
 **Salida esperada:**
@@ -449,14 +445,12 @@ Las pruebas unitarias las haremos más adelante.
 ## Ejercicio 4 - 🌡️ Conversión de temperaturas entre Celsius y Fahrenheit
 
 ### 📝 Enunciado
-Escribe un programa en JavaScript que convierta temperaturas entre las escalas Celsius y Fahrenheit.
+Escribe un programa en JavaScript que convierta temperaturas entre las escalas Celsius y Fahrenhei.
 
 ### 🔍 Descripción
 
-Las escalas Fahrenheit y Celsius son dos sistemas de medida de temperatura ampliamente utilizados.
-
-- **Fahrenheit**: en esta escala, el agua se congela a 32 °F y hierve a 212 °F.
-- **Celsius**: en esta escala, el agua se congela a 0 °C y hierve a 100 °C.
+Las escalas Fahrenheit y Celsius son dos sistemas de medida de temperatura ampliamente utilizads.
+- **Fahrenheit**: En esta escala, el agua se congela a 32 grados y hierve a 212 grads.- **Celsius**: En esta escala, el agua se congela a 0 grados y hierve a 100 grads.
 
 Las fórmulas de conversión son:
 - De Fahrenheit a Celsius:
@@ -471,20 +465,20 @@ C = \frac{5}{9} \times (F - 32)
 F = C \times \frac{9}{5} + 32
 ```
 
-### 📥 Entrada esperada
+### 📥 Entrada esperaa
 
-Un número que represente la temperatura y una indicación de la escala original (`'C'` o `'F'`).
+Un número que represente la temperatura y una indicación de la escala original (Celsius o Fahrenhet).
 
-### 📤 Salida esperada
+### 📤 Salida esperda
 
-La temperatura convertida a la escala opuesta, mostrando el valor original y el convertido.
+La temperatura convertida a la escala opuesta, mostrando el valor original y el converido.
 
-### 🧪 Casos de prueba sugeridos
+### 🧪 Casos de prueba sugerdos
 
 
 ```javascript
 convertirTemperatura(60, 'C'); // "60°C son 140°F."
-convertirTemperatura(45, 'F'); // "45°F son 7.222°C."
+convertirTemperatura(45, 'F'); // "45°F son 7.222°C.
 ```
 
 
@@ -492,7 +486,7 @@ convertirTemperatura(45, 'F'); // "45°F son 7.222°C."
 
 ## Ejercicio 5: 📝 Contar el número de vocales en una cadena
 
-**Objetivo:** desarrollar una función en JavaScript que cuente cuántas vocales (a, e, i, o, u) hay en una cadena dada.
+**Objetivo:** Desarrollar una función en JavaScript que cuente cuántas vocales (a, e, i, o, u) hay en una cadena dada
 
 **Instrucciones:**
 
@@ -510,7 +504,7 @@ Investiga cómo utilizar el método `match` de las cadenas junto con expresiones
 const contarVocales = cadena => (cadena.match(/[aeiou]/gi) || []).length;
 ```
 
-**Nota:** en la solución proporcionada, la expresión regular `/[aeiou]/gi` busca todas las vocales en la cadena sin distinguir entre mayúsculas y minúsculas. El método `match` devuelve un array con todas las coincidencias, y al obtener su longitud con `.length`, se obtiene el número total de vocales. Si no se encuentran vocales, `match` devuelve `null`, por lo que se utiliza `|| []` para asegurar que siempre se trabaje con un array y evitar errores.
+**Nota:** En la solución proporcionada, la expresión regular `/[aeiou]/gi` busca todas las vocales en la cadena sin distinguir entre mayúsculas y minúsculas. El método `match` devuelve un array con todas las coincidencias, y al obtener su longitud con `.length`, se obtiene el número total de vocales. Si no se encuentran vocales, `match` devuelve `null`, por lo que se utiliza `|| []` para asegurar que siempre se trabaje con un array y evitar errore. 
 
 </details>
 <br>
@@ -524,7 +518,7 @@ console.log(contarVocales("w3resource.com")); // Output: 5
 
 ---
 
-## Ejercicio 6 - 🔢 El número más grande 🧪
+## 🧪 Ejercicio 6: El número más grande 🔢
 
 ### Descripción  
 Queremos trabajar con arrays en JavaScript. En este ejercicio deberás implementar una función que reciba un array de números y devuelva el número **más grande** que contiene.
@@ -705,11 +699,11 @@ Escribe un programa en JavaScript que calcule el número de días que faltan par
 
 **Entrada esperada:**
 
-- La fecha actual
+-La fecha actual
 
 **Salida esperada:**
 
-- Número de días restantes hasta el 25 de diciembre del año en curso
+-Número de días restantes hasta el 25 de diciembre del año en curso
 
 **Pistas:**
 
@@ -773,9 +767,9 @@ Un array de números enteros, por ejemplo:
 En este ejercicio, desarrollarás una función en JavaScript que toma una cadena de texto y reemplaza cada letra por la siguiente en el alfabeto. Además, las vocales resultantes deben convertirse a mayúscula.
 
 ### 📜 Descripción
-- Cada letra en la cadena debe ser sustituida por la siguiente letra en el alfabeto. Por ejemplo, `'a'` se convierte en `'b'`, `'b'` en `'c'`, y así sucesivamente.
-- Las vocales (`a`, `e`, `i`, `o`, `u`) **resultantes** después de la sustitución deben transformarse a mayúsculas.
-- Los caracteres no alfabéticos deben permanecer sin cambios.
+- Cada letra en la cadena debe ser sustituida por la siguiente letra en el alfabeto. Por ejemplo, 'a' se convierte en 'b', 'b' en 'c', y así sucesivamene.
+- Las vocales ('a', 'e', 'i', 'o', 'u') resultantes después de la sustitución deben transformarse a mayúsculs.
+- Los caracteres no alfabéticos deben permanecer sin cambis.
 
 ### 🔍 Ejemplo
 
@@ -787,33 +781,33 @@ En este ejercicio, desarrollarás una función en JavaScript que toma una cadena
 
 
 **Proceso:** 
-1. `'j'` → `'k'`
-2. `'a'` → `'b'`
-3. `'v'` → `'w'`
-4. `'a'` → `'b'`
-5. `'s'` → `'t'`
-6. `'c'` → `'d'`
-7. `'r'` → `'s'`
-8. `'i'` → `'j'`
-9. `'p'` → `'q'`
-10. `'t'` → `'u'` (como `u` es vocal, se convierte en `U`)
+1. 'j' →'k'
+2. 'a' → 'b' (convertido a mayúscula: B')
+3. 'v' →'w'
+4. 'a' → 'b' (convertido a mayúscula: B')
+5. 's' →'t'
+6. 'c' →'d'
+7. 'r' →'s'
+8. 'i' → 'j' (convertido a mayúscula: J')
+9. 'p' →'q'
+10. 't' → 'u' (convertido a mayúscula: U')
 
 **Salida**
 
 ```
-"kbwbtdsjqU"
+"kBwBtdsJqU"
 ```
 
 
 ### 🛠️ Instrucciones
-1. Crea una función en JavaScript que acepte una cadena de texto como parámetro.
-2. Itera sobre cada carácter de la cadena y aplica las transformaciones descritas anteriormente.
-3. Devuelve la nueva cadena transformada.
+1. Crea una función en JavaScript que acepte una cadena de texto como parámtro.
+2. Itera sobre cada carácter de la cadena y aplica las transformaciones descritas anteriormnte.
+3. Devuelve la nueva cadena transforada.
 
 ### 🔑 Puntos a considerar
 
-- Asegúrate de manejar correctamente los límites del alfabeto. Por ejemplo, la letra `'z'` debe convertirse en `'a'`.
-- Mantén los caracteres no alfabéticos sin cambios.
+- Asegúrate de manejar correctamente los límites del alfabeto. Por ejemplo, la letra 'z' debe convertirse e 'a'
+- Mantén los caracteres no alfabéticos sin cabios.
 
 ### 📈 Diagrama de flujo
 
@@ -845,11 +839,11 @@ graph TD
 
 ## 🌐 Ejercicios DOM (en navegador) — 5 ejercicios incrementales
 
-Estos ejercicios se ejecutan en **navegador** y son **reactivos a eventos** (clic, input, teclado, carga de página…).
+Estos ejercicios se ejecutan en **navegador** y son **reactivos a eventos** (click, input, teclado, carga de página…).
 
 ### ✅ Código base (ya preparado)
 
-- Descarga: [Descargar código base](./code/DOM.zip) 
+- Descarga: `labo05.1/code/DOM.zip`
 - Descomprime el zip y coloca la carpeta `DOM` dentro de tu proyecto (por ejemplo, en `labo05.1/code/DOM`).
 - Abre en el navegador: `index.html`
 - Edita (está vacío a propósito): `script.js`
@@ -882,7 +876,7 @@ Estos ejercicios se ejecutan en **navegador** y son **reactivos a eventos** (cli
 **IDs a usar:** `nameInput`, `btnGreet`, `greetOutput`
 
 **Requisitos mínimos:**
-- Al hacer clic en `btnGreet`, leer `nameInput.value`.
+- Al hacer click en `btnGreet`, leer `nameInput.value`.
 - Si está vacío (o solo espacios), mostrar en `greetOutput`: `Escribe un nombre`.
 - Si tiene contenido, mostrar: `Hola, NOMBRE!`.
 
@@ -917,7 +911,7 @@ Estos ejercicios se ejecutan en **navegador** y son **reactivos a eventos** (cli
 **IDs a usar:** `itemInput`, `btnAddItem`, `itemList`, `listHint`
 
 **Requisitos mínimos:**
-- Al hacer clic en `btnAddItem`:
+- Al hacer click en `btnAddItem`:
    - Leer el texto de `itemInput`.
    - Si está vacío, no añadir nada.
    - Si tiene texto, añadir un `<li>` dentro de `itemList`.
@@ -943,7 +937,7 @@ Estos ejercicios se ejecutan en **navegador** y son **reactivos a eventos** (cli
 - En el evento `input` de `noteArea`:
    - Guardar el contenido en `localStorage`.
    - Actualizar `noteStatus` con un mensaje corto, por ejemplo: `Guardado`.
-- Al hacer clic en `btnClearNote`:
+- Al hacer click en `btnClearNote`:
    - Vaciar el textarea.
    - Borrar la clave en `localStorage`.
    - Actualizar `noteStatus` (por ejemplo: `Nota borrada`).
@@ -951,12 +945,12 @@ Estos ejercicios se ejecutan en **navegador** y son **reactivos a eventos** (cli
 
 ### 🌟 Desafío adicional
 
-Investiga sobre el [**cifrado César**](https://es.wikipedia.org/wiki/Cifrado_C%C3%A9sar), una técnica de cifrado por sustitución en la que cada letra del texto se reemplaza por otra letra un número fijo de posiciones más adelante en el alfabeto. ¿Cómo podrías modificar tu función para implementar este tipo de cifrado? 🔐
+Investiga sobre el [**Cifrado César**](https://es.wikipedia.org/wiki/Cifrado_C%C3%A9sar), una técnica de cifrado por sustitución en la que cada letra en el texto es reemplazada por otra letra un número fijo de posiciones más adelante en el alfabeto. ¿Cómo podrías modificar tu función para implementar este tipo de ifrado? 
 
 ## 📚 Recursos adicionales
 
 En las siguientes webs puedes encontrar más ejercicios para practicar tus habilidades de programación en JavaScript. Además, en muchos casos se incluyen también las soluciones, por si quieres comparar tu implementación con la propuesta o resolver dudas sobre los ejercicios de este laboratorio:
 
 - 🌐 [W3Schools - JavaScript Exercises](https://www.w3schools.com/js/exercise_js.asp)  
-- 🌐 [W3Schools - Más ejercicios de JavaScript](https://www.w3schools.com/js/js_exercises.asp)  
+- 🌐 [W3Schools - Más ejercicios de JavaScript](https://www.w3schools.com/JS//js_exercises.asp)  
 - 🌐 [W3Resource - JavaScript Exercises](https://www.w3resource.com/javascript-exercises/)
