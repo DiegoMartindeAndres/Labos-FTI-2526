@@ -28,9 +28,9 @@ Ante cualquier error o sugerencia, por favor, contáctame en mi correo:
 5. 🧠 [Laboratorios 05: **JavaScript**](labo05/README.md)
    1. [✨ Laboratorio 05.1: **JavaScript básico**](labo05.1/README.md)
    2. ⏱️ Laboratorio 05.2: **JavaScript OO y programación asíncrona** — **próximamente**
-6. 🧷 [Laboratorio 06: **DOM y BOM**](labo06/README.md) — **próximamente**
-7. 🔁 [Laboratorio 07: **jQuery**](labo07/README.md) — **próximamente**
-8. ✨ [Laboratorio 08:  **AJAX**](labo08/README.md) — **próximamente**
-9. 📡 [Laboratorio 09: **Fetch**](labo09/README.md) — **próximamente**
+6. 🧷 Laboratorio 06: **DOM y BOM**(labo06/README.md) — **próximamente**
+7. 🔁 Laboratorio 07: **jQuery**(labo07/README.md) — **próximamente**
+8. ✨ Laboratorio 08:  **AJAX**(labo08/README.md) — **próximamente**
+9. 📡 Laboratorio 09: **Fetch**(labo09/README.md) — **próximamente**
 
   
