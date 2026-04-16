@@ -1,962 +1,615 @@
-# 🏋️ Ejercicios JavaScript
+# FTI: 📘 Manual de instalación del servidor personal en la nube
 
-## ✨ Objetivos del laboratorio
+## 🔹 Introducción  
 
-El propósito de este laboratorio es que practiques la programación de algoritmos utilizando JavaScript, partiendo de un conjunto de ejercicios. No se trata solo de escribir código que funcione, sino de aplicar un **proceso sistemático de desarrollo** que te ayude a resolver problemas de forma ordenada, eficiente y profesional.
+En este manual aprenderás a configurar y desplegar el servidor personal en la nube, utilizando herramientas esenciales como [SSH](https://es.wikipedia.org/wiki/Secure_Shell) y [MobaXterm](https://mobaxterm.mobatek.net/). El objetivo es proporcionarte una guía paso a paso que te permita:  
 
-## 🧠 Antes de programar... piensa
+1️⃣ **Acceder a tu máquina virtual** mediante SSH y MobaXterm.  
+2️⃣ **Crear una estructura de directorios** adecuada para alojar el servicio web.  
+3️⃣ **Instalar y configurar un servidor web** basado en **Node.js** y **Express**.  
+4️⃣ **Usar PM2** para gestionar la ejecución del servicio de forma eficiente.  
+5️⃣ **Descargar el código del servidor** desde un repositorio de GitHub y ponerlo en marcha.  
+6️⃣ **Configurar el servidor** con los puertos adecuados y la ruta de acceso.  
+7️⃣ **Configurar la API REST** y probarla.  
 
-Programar **no es solo escribir código**, sino resolver problemas. Y para resolver problemas, hay un **proceso mental** que debemos seguir antes de abrir el editor:
-
-1. **Leer el enunciado con atención** 📄  
-   > Es la fase de **Toma de requisitos**. ¿Qué nos están pidiendo? ¿Qué datos se nos dan? ¿Qué resultados se esperan?
-
-2. **Entender el problema** 🤔  
-   > Equivale al **Análisis**. ¿Qué casos pueden darse? ¿Qué limitaciones tiene el problema?
-
-3. **Plantear una solución lógica** 🧩  
-   > Esta es la fase de **Diseño**. Pensamos cómo resolverlo con un algoritmo, qué pasos seguir, y qué estructuras de datos emplear.
-
-4. **Programar la solución** 💻  
-   > Aquí comienza la **Implementación** en JavaScript. Escribimos el código basándonos en el diseño previo.
-
-5. **Probar y depurar** 🧪  
-   > Por último, llega la fase de **Pruebas**. Verificamos que el código funciona para todos los casos posibles, incluidos los límites o casos especiales.
+Al finalizar este manual, serás capaz de gestionar un servidor web básico en una máquina virtual, lo que te servirá como base para futuros desarrollos y despliegues en entornos reales.
 
 
-### 🤖 ¿Y la inteligencia artificial?
+## ⚠️ **AVISO IMPORTANTE** ⚠️  
 
-Vivimos en un momento histórico donde herramientas basadas en inteligencia artificial pueden ayudarnos a programar. Es más: **puedes copiar el enunciado de estos ejercicios y pedírselo directamente a una IA**, y seguramente te devuelva una solución bastante razonable. Los enunciados están redactados de forma clara y precisa, y eso facilita mucho que una IA los entienda. Pero...
+Las máquinas virtuales proporcionadas son exclusivamente para uso docente en la asignatura **Fundamentos de las Tecnologías de la Información (FTI)** o fines puramente docentes e instructivos.  
 
-> ❗ **Esto no será lo normal en el mundo real.**
+**Cualquier uso indebido o no autorizado será sancionado de manera inmediata con un suspenso automático en la asignatura, sin excepciones.**  
 
-En la vida profesional, los problemas no vendrán con enunciados tan bien redactados. Te tocará enfrentarte a requisitos difusos, clientes que no saben expresar lo que quieren o necesidades que cambian sobre la marcha. **Deberás ser capaz de entender el problema, formularlo bien y plantear soluciones viables**.
+Además, **si se detecta un uso malintencionado o ilegal, se procederá a la denuncia correspondiente ante las autoridades académicas y, si es necesario, ante las autoridades legales competentes.**  
 
-Y ahora piensa:
+🔍 Los profesores monitorizamos activamente el uso de las máquinas virtuales, así como todo el equipo informático que hay detrás, para garantizar el correcto funcionamiento y la seguridad del servicio.
 
-> 🧾 ¿Y si la IA se encarga de programar por ti?  
-> 💰 ¿Por qué te iban a pagar a ti?  
-> 🧠 ¿Cómo justificarás tu salario?
+No hay advertencias ni segundas oportunidades. 
 
-Simplemente piénsalo.
+<p align="center"> ⚠️ 🔴 <strong><span style="font-size: 2em;">Usa estos recursos con responsabilidad</span></strong> 🔴 ⚠️ </p>
 
-Saber programar no es solo teclear código. Es **entender, razonar, diseñar, validar y corregir**. La IA puede ayudarte en todo ese proceso, pero **no puede hacerlo sin ti**. Por eso, **no debemos saltarnos ninguna fase del desarrollo**.
+## 🌐 Servidor Virtual: Acceso y Configuración  
 
+Cada estudiante dispone de una **máquina virtual** (VM) preconfigurada con los recursos necesarios para alojar su servicio web. Estas máquinas están accesibles a través de Internet y permiten tanto la gestión remota mediante [SSH](https://es.wikipedia.org/wiki/Secure_Shell) como la visualización del servicio web desde un navegador.  
 
-## 🚦 Antes de empezar: 3 ideas imprescindibles (desde Visual Studio Code)
+## 📡 Conexión a la Máquina Virtual  
 
-Antes de lanzarte al Ejercicio 1, hay tres conceptos que te van a ahorrar muchísima frustración cuando empieces a escribir (y sobre todo a depurar) JavaScript.
+Para acceder a tu máquina virtual (**VM**), necesitas utilizar **[SSH](https://es.wikipedia.org/wiki/Secure_Shell)** o un programa con interfaz gráfica para gestionar conexiones **SSH**. Recomendamos [MobaXterm](https://mobaxterm.mobatek.net/) por su facilidad de uso, versatilidad y compatibilidad con todos los sistemas operativos.  
 
+### 🔑 Información de conexión  
 
-### 1) 🧠 ¿Cómo se ejecuta un archivo JavaScript? (y por qué no es como Java)
+Para conectarte a la VM, necesitarás los datos de acceso que te han sido proporcionados por correo electrónico:  
 
-En JavaScript, cuando ejecutas un archivo (por ejemplo con Node.js o en un navegador), el motor **carga y ejecuta el código de arriba hacia abajo**.
+- **🌍 Dirección URL** → Se usa tanto para la conexión **SSH** como para acceder al servicio web vía **HTTP**.  
+- **🔐 Puerto SSH** → Necesario para establecer una conexión segura con la VM.  
+- **🌐 Puerto HTTP** → Permite visualizar el servicio web desde un navegador.  
+- **🔑 Contraseña** → De inicio siempre será: `cambialaclaveya`. Esto significa que debes cambiarla cuanto antes.
 
-Pero hay un matiz importante: el motor hace dos “pasadas” conceptuales:
+⚠️ **Importante**:  
+1. Si no tienes esta información, contacta con tu profesor para que te la proporcione.  
+2. **No confundas el puerto SSH con el puerto HTTP**:  
+   - **SSH** se usa para conectarte a la consola de la VM y administrar el sistema.  
+   - **HTTP** es para acceder al servicio web alojado en la VM desde un navegador.  
 
-1. **Fase de creación (preparación)** (a veces se habla de *hoisting*)
-    - Se registran **declaraciones de funciones** (p. ej. `function f() {}`) y quedan disponibles “desde el principio”.
-    - Se preparan variables declaradas con `var` (existen desde el inicio, pero empiezan con `undefined`).
-   - Se preparan `let` y `const`, pero quedan en una zona especial (la **Temporal Dead Zone** o **TDZ**) hasta que el flujo de ejecución llega a su línea.
+### 🔑 Conexión mediante SSH  
 
-2. **Fase de ejecución (línea a línea)**
-    - Se van ejecutando las instrucciones **en el orden en que aparecen**.
+Podemos conectarnos a la máquina virtual mediante SSH, ya sea por línea de comandos (usando **SSH**) o usando un programa como **MobaXterm**. Primero veremos la conexión por línea de comandos y después con **MobaXterm** (recomendado).
 
-✅ La **primera línea que “se ejecuta”** es la primera instrucción del archivo (la primera sentencia ejecutable). Aun así, algunas cosas (como las funciones declaradas) ya existen por el comportamiento anterior.
+#### 1️⃣ Conexión por Línea de Comandos
 
-🔁 Esto es distinto a Java en un punto clave: en Java, en general, el flujo “normal” está dentro de métodos (aunque existan inicializadores y constructores). En JavaScript **sí puedes** escribir sentencias “arriba del todo” y se ejecutan directamente cuando se carga el archivo.
+En **Linux/macOS**, no necesitas instalar nada, ya que [SSH](https://www.ssh.com/academy/ssh) viene preinstalado.  
+En **Windows**, puedes usar [Git Bash](https://git-scm.com/downloads), que incluye SSH, aunque es probable que ya lo tengas instalado.
 
-Un detalle importante: aunque **las funciones son valores** (puedes asignarlas a variables), **no es lo mismo** escribir `function f() {}` (declaración) que `const f = function () {}` o `const f = () => {}` (expresión). En el reto de abajo se ve clarísimo.
+🔹 **Paso 1: Abrir la terminal**  
+En Linux/macOS, usa **Terminal**.  
+En Windows, abre **Git Bash** o la **Consola de Windows (cmd/PowerShell)**.
 
-#### 🎯 Reto (ambicioso y algo “tramposo”): ¿qué orden crees que sigue y qué sale por pantalla?
+🔹 **Paso 2: Conectarte a la máquina virtual**  
+Ejecuta el siguiente comando, reemplazando los valores según tu configuración:
 
-**Instrucciones (en VS Code):**
+> ⚠️ **Nota sobre redes (eduroam / WiFi públicas)**: se recomienda hacer la conexión SSH desde una red “estable” (WiFi de casa, oficina o por cable). Ten en cuenta que muchas redes (especialmente **eduroam**) y algunas WiFis públicas (residencias de estudiantes, aeropuertos, hoteles, etc.) **pueden bloquear puertos que no sean “well-known”**. En la conexión SSH para el servidor personal en la nube de FTI el **puerto no es estándar**, la conexión puede fallar si la red lo filtra. Si te ocurre, prueba otra red.
 
-1. Crea un archivo llamado, por ejemplo, `reto-orden.js`.
-2. Pega este código.
-3. Antes de ejecutarlo, escribe en un papel (o comenta en el propio archivo) el orden de los `console.log` y **qué valores** esperas.
-4. Ejecútalo con Node.js desde el terminal integrado: `node reto-orden.js`.
-
-> Importante: la gracia del reto es que **parece** que hay un orden obvio… hasta que recuerdas cómo funcionan `var`, `let`, las funciones y el orden real de ejecución.
-
-```js
-console.log('1) total al principio:', total);
-
-var total = 0;
-
-console.log('2) total tras inicializar:', total);
-
-function sumarUno(etiqueta) {
-   total = total + 1;
-   console.log(etiqueta, '→ total =', total);
-   return total;
-}
-
-console.log('3) llamar a declarada:', declarada());
-
-function declarada() {
-   return sumarUno('4) dentro declarada');
-}
-
-try {
-   console.log('5) llamar a expresion:', expresion());
-} catch (e) {
-   console.log('5) llamar a expresion: ERROR');
-}
-
-var expresion = function () {
-   return sumarUno('6) dentro expresion');
-};
-
-try {
-   {
-      console.log('7) bloque antes del let:', total);
-      let total = 100;
-      console.log('8) bloque despues del let:', total);
-   }
-} catch (e) {
-   console.log('7-8) bloque con let: ERROR');
-}
-
-console.log('9) total al final:', total);
-sumarUno('10) sumarUno final');
-console.log('11) total final final:', total);
+```sh
+ssh -p PUERTO_SSH usuario@virtual.infor.uva.es 
 ```
 
-🧩 Preguntas para pensar (sin mirar soluciones):
-- ¿Por qué el `console.log` (1) no revienta si `total` “aún no existe”? ¿Qué valor imprime?
-- ¿Por qué `declarada()` funciona antes de su definición y `expresion()` no?
-- ¿Qué está pasando dentro del bloque con `let total = 100`?
+📌 **Parámetros a modificar**:  
+- **PUERTO_SSH**: Número de puerto para la conexión SSH.  
 
-<details>
-    <summary>¿Quieres saber la solución?</summary>
-<br>
+📌 **Parámetros que NO DEBES modificar**:  
+- **usuario**: debes dejar literalmente `usuario`.
+- **virtual.infor.uva.es**: debes dejar literalmente `virtual.infor.uva.es`.
 
-Por consola obtendremos esto:
 
-```bash
-1) total al principio: undefined
-2) total tras inicializar: 0
-4) dentro declarada → total = 1
-3) llamar a declarada: 1
-5) llamar a expresion: ERROR
-7-8) bloque con let: ERROR
-9) total al final: 1
-10) sumarUno final → total = 2
-11) total final final: 2
-```
-
-Explicación:
-
-```js
-// NOTA GENERAL: JavaScript ejecuta el archivo de arriba a abajo.
-// Lo “sorprendente” aquí viene de:
-// - Hoisting de `var`: se eleva (se registra) la *declaración* al inicio del scope,
-//   pero la *inicialización* se queda en su línea.
-// - Hoisting de `function` (declaraciones): se elevan con su cuerpo completo.
-// - `let`: es de bloque y existe una Temporal Dead Zone (TDZ) desde el inicio del
-//   bloque hasta su línea de declaración; leerla antes lanza ReferenceError.
-
-// 1) En este punto existe la variable `total` (por hoisting de `var total`),
-//    pero aún no está inicializada. Su valor es `undefined`.
-//    Resultado en consola: "1) total al principio: undefined"
-console.log('1) total al principio:', total);
-
-// 2) Aquí ocurre la inicialización real (la asignación). A partir de aquí `total` vale 0.
-var total = 0;
-
-// Resultado en consola: "2) total tras inicializar: 0"
-console.log('2) total tras inicializar:', total);
-
-// `sumarUno` es una *function declaration*: está disponible en todo el scope por hoisting.
-// Además, tiene efecto lateral: modifica `total`.
-function sumarUno(etiqueta) {
-   total = total + 1;
-   console.log(etiqueta, '→ total =', total);
-   return total;
-}
-
-// 3) `declarada()` también es una *function declaration*, así que se puede llamar
-//    antes de su definición textual.
-//    Durante esta llamada:
-//    - se ejecuta `sumarUno('4) dentro declarada')`
-//    - `sumarUno` incrementa `total` de 0 a 1
-//    - imprime primero: "4) dentro declarada → total = 1"
-//    - devuelve 1, y entonces se imprime: "3) llamar a declarada: 1"
-console.log('3) llamar a declarada:', declarada());
-
-function declarada() {
-   return sumarUno('4) dentro declarada');
-}
-
-try {
-   // 5) `expresion` está declarada con `var`, por lo que *existe* (hoisting),
-   //    pero en este punto sigue valiendo `undefined` porque la asignación
-   //    (la función) ocurre más abajo.
-   //    Llamar `undefined()` lanza TypeError. Se captura y se imprime "ERROR".
-   console.log('5) llamar a expresion:', expresion());
-} catch (e) {
-   console.log('5) llamar a expresion: ERROR');
-}
-
-// 6) Recién aquí `expresion` queda inicializada con una función.
-//    (Es una *function expression* asignada a una variable, no una declaración.)
-var expresion = function () {
-   return sumarUno('6) dentro expresion');
-};
-
-try {
-   {
-      // 7-8) Dentro de este bloque, `let total = 100` crea una nueva `total`.
-      //      Esa `total` de bloque existe desde el inicio del bloque, pero está
-      //      en TDZ hasta la línea del `let`. Por eso *leer `total` aquí* lanza
-      //      ReferenceError incluso aunque exista una `total` global.
-      //      (La variable global queda “sombreada” por la del bloque.)
-      //      Resultado: se salta directamente al `catch` y NO se imprimen 7) ni 8).
-      console.log('7) bloque antes del let:', total);
-      let total = 100;
-      console.log('8) bloque despues del let:', total);
-   }
-} catch (e) {
-   console.log('7-8) bloque con let: ERROR');
-}
-
-// 9) `total` sigue valiendo 1 (solo se incrementó dentro de `declarada()`).
-//    Resultado: "9) total al final: 1"
-console.log('9) total al final:', total);
-
-// 10) Incrementa de 1 a 2 e imprime: "10) sumarUno final → total = 2"
-sumarUno('10) sumarUno final');
-
-// 11) Ahora `total` vale 2.
-//     Resultado: "11) total final final: 2"
-console.log('11) total final final:', total);
+### 🔐 Primera conexión: aceptar la clave del servidor  
+Si es la primera vez que te conectas, SSH te pedirá que confirmes la autenticidad del servidor con un mensaje similar a:
 
 ```
-
-</details>
-
-#### 🧱 Organización recomendada del código (si solo tienes un fichero `.js`)
-
-Cuando trabajas con **un único archivo** (lo típico en ejercicios), conviene imponer un orden fijo para que el flujo sea fácil de seguir y evitar sorpresas con el *hoisting*.
-
-✅ Regla práctica: **primero defines (datos y funciones), y al final ejecutas**.
-
-**Orden recomendado (de arriba a abajo):**
-
-1. **Constantes y configuración**
-   - Usa `const` por defecto (si no cambia, es `const`).
-   - Aquí van valores “fijos”: límites, textos, opciones, etc.
-
-2. **Variables de estado (si las hay)**
-   - Usa `let` solo si vas a reasignar.
-   - Evita `var` para no mezclar scopes y hoisting “confuso”.
-
-3. **Funciones auxiliares / lógica principal**
-   - Coloca primero las funciones más pequeñas (helpers) y luego las que las usan.
-   - Si una función se usa “antes” en el archivo, que sea porque es **declaración** (`function f() {}`) o, mejor aún, porque **está definida arriba**.
-   - ✅ Buena práctica: evita que las funciones **toquen/modifiquen variables globales** (estado externo). Es más fácil de probar y de depurar si una función recibe datos por parámetros y devuelve un resultado.
-
-4. **Punto de entrada (lo primero que “hace cosas”)**
-   - Crea una función `main()` (o similar) donde estén las primeras líneas “reales” que se ejecutan: leer datos, llamar a funciones, imprimir resultados.
-   - Al final del archivo, llama a `main()`.
-
-Plantilla mínima (para ejercicios):
-
-```js
-// 1) Constantes / configuración
-const LIMITE = 100;
-
-// 2) Variables (estado)
-let contador = 0;
-
-// 3) Funciones
-function calcularAlgo(x) {
-   return x + LIMITE;
-}
-
-function main() {
-   const resultado = calcularAlgo(5);
-   console.log('Resultado:', resultado);
-}
-
-// 4) Ejecución (punto de entrada)
-main();
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
 ```
 
-
-### 2) ▶️ ¿Cómo ejecutar JavaScript? (3 escenarios típicos)
-
-En esta asignatura usarás **Visual Studio Code** como herramienta central. Desde ahí, JavaScript suele ejecutarse de tres formas:
-
-1. **Script independiente (lo más común: Node.js)**
-    - Ideal para ejercicios, algoritmos y prácticas.
-    - Flujo típico en VS Code: crear `archivo.js` → terminal integrado → `node archivo.js`.
-
-2. **JavaScript asociado a una web (lo ejecuta el navegador)**
-    - El código se carga desde un `.html` mediante `<script>`.
-    - El navegador ejecuta JavaScript y puedes ver los resultados en:
-       - La consola de DevTools del navegador.
-       - O depurando desde VS Code (ver punto 3).
-
-3. **JavaScript en un servidor web (backend)**
-    - Aquí JavaScript corre “del lado del servidor”.
-    - Se suele usar **Node.js** o **Deno** para ejecutar el código.
-    - Normalmente el servidor se queda “escuchando” peticiones (por ejemplo, en un puerto) en lugar de terminar al instante.
+✅ Escribe `yes` y presiona `Enter`.
 
 
-### 3) 🐞 Debugging básico: de `console.log` a depurar en VS Code
+### 🔑 Introducir la contraseña  
+- Después, se te pedirá la contraseña. La contraseña inicial es `cambialaclaveya`.
+- Escríbela y presiona `Enter`.
 
-Cuando tu código no hace lo que esperas, tienes dos enfoques típicos:
+⚠ **IMPORTANTE:**  
+- No verás asteriscos ni caracteres al escribir la contraseña.  
+- Esto es completamente normal en SSH.  
+- Solo escribe tu contraseña y presiona `Enter`.  
+- No olvides cambiar tu contraseña en cuanto te conectes. Para ello debes usar el comando `passwd` y seguir las instrucciones. Debes elegir una contraseña robusta, segura y no repetida.
+- Si alguien entra en su servidor y hace algo malintencionado, la responsabilidad recaerá sobre ti.
 
-1. **`console.log` (lo más usado, pero limitado)**
-    - Es rápido para una comprobación puntual.
-    - Pero a la larga es un rollo: ensucia el código, cuesta seguir el flujo y es fácil interpretarlo mal.
-    - Además, JavaScript es muy **asíncrono** y orientado a eventos: a veces el orden de los logs engaña, y puedes perder el contexto de “qué se estaba ejecutando” y por qué.
+Si tienes una respuesta por consola con el siguiente aspecto:
 
-2. **Depurar con Visual Studio Code (recomendado para entender el flujo)**
-    - Te permite poner **breakpoints**, ver variables, pila de llamadas (call stack), y avanzar paso a paso.
-    - Para depurar un script con Node.js:
-       - Ve a **Run and Debug** (panel de depuración).
-       - Elige un perfil de **Node.js**.
-       - Lanza la ejecución y usa breakpoints.
-    - Para depurar JavaScript del navegador:
-       - Elige un perfil de depuración del navegador (por ejemplo, Chrome/Edge).
-       - Abre la web y depura desde VS Code, no solo desde DevTools.
+```sh   
+Last login: Tue Feb 11 10:38:10 2026 from 157.88.80.82
+usuario@labFTI-10:~$ 
+```
 
-> Objetivo de este laboratorio: que poco a poco dejes de “adivinar” con logs y empieces a **entender el flujo** con un depurador.
+¡Felicidades! ¡Ya estás conectado a tu máquina virtual! 🎉
+
+### 2️⃣ Conexión con MobaXterm
+
+[MobaXterm](https://mobaxterm.mobatek.net/) es una herramienta para todos los sistemas operativos que facilita la conexión remota mediante **SSH** con una interfaz gráfica avanzada.
+
+🔹 **Paso 1: Descargar e instalar MobaXterm**  
+Si aún no lo tienes instalado, descarga la versión **Home Edition** desde su [página oficial](https://mobaxterm.mobatek.net/download.html) y además proponemos descargar, siempre que se pueda, la versión portable, ya que la podemos instalar en un pendrive.
+
+🔹 **Paso 2: Abrir MobaXterm**  
+Ejecuta **MobaXterm** y accede a la pantalla principal.
+
+🔹 **Paso 3: Crear una nueva sesión SSH**  
+1. Haz clic en **Session** (sesión) en la parte superior izquierda.  
+
+<div align="center">
+    <img src="img/mobaxterm-session.PNG" alt="MobaXterm Session" width="75%">
+</div>
+
+2. Selecciona **SSH**.  
+<div align="center">
+    <img src="img/mobaxterm-ssh.PNG" alt="MobaXterm ssh" width="75%">
+</div>
+
+3. En **Remote host**, introduce la dirección de la máquina virtual:  
+   ```
+   virtual.infor.uva.es
+   ```
+3. En **Specify username**, introduce `usuario`.  
+4. En **Port**, introduce el **PUERTO_SSH** correspondiente.  
+
+<div align="center">
+    <img src="img/mobaxterm-data.PNG" alt="MobaXterm ssh" width="75%">
+</div>
+
+5. Haz clic en **OK** para guardar y conectar.
+
+### 🔐 Primera conexión: aceptar la clave del servidor  [No siempre ocurre este paso.]
+Si es la primera vez que te conectas, MobaXterm te pedirá que confirmes la autenticidad del servidor con un mensaje similar a:
+
+```
+Host key verification failed. Do you want to continue? (Yes/No)
+```
+
+✅ Selecciona **Yes** para continuar.
+
+### 🔑 Introducir la contraseña  
+Cuando se solicite, introduce tu contraseña y presiona `Enter`.  (La primera contraseña es `cambialaclaveya`, pero debes cambiarla en cuanto te conectes)
+⚠ **Recuerda:** No se mostrarán caracteres mientras la escribes, pero se está registrando.
 
 
+Te pedirá si quieres guardar tu contraseña para acceder al servicio. Es buena idea tenerla guardada para no tener que reescribirla constantemente. Pero si eres un freak de la seguridad, no lo hagas.
+
+
+Si ves un mensaje como este en la terminal integrada de MobaXterm:
+
+```sh
+     ┌────────────────────────────────────────────────────────────────────┐
+     │                        • MobaXterm 25.0 •                          │
+     │            (SSH client, X-server and networking tools)             │
+     │                                                                    │
+     │ ➤ SSH session to usuario@vpn.infor.uva.es                         │
+     │   • SSH compression : ✔                                            │
+     │   • SSH-browser     : ✔                                            │
+     │   • X11-forwarding  : ✔  (remote display is forwarded through SSH) │
+     │   • DISPLAY         : ✔  (automatically set on remote server)      │
+     │                                                                    │
+     │ ➤ For more info, ctrl+click on help or visit our website           │
+     └────────────────────────────────────────────────────────────────────┘
+
+[Muchos datos de la conexión]
+
+
+Last login: Tue Feb 11 10:38:10 2026 from 157.88.80.82
+usuario@labFTI-10:~$
+```
+
+¡Felicidades! 🎉 Ya estás conectado a tu máquina virtual.
+
+Como podrás comprobar, tienes un panel a la izquierda que te permite subir y bajar archivos, lo cual es muy útil e interesante cuando estamos trabajando con servidores remotos.
+
+No olvides cambiar tu contraseña nada más entrar con el comando `passwd` y seguir las instrucciones.
+
+## 🔹 **Ejecutando comandos en una consola remota por SSH** 🧑‍💻  
+
+Una vez conectado a la máquina virtual a través de SSH, puedes ejecutar comandos como si estuvieras trabajando en una terminal local de Linux. Sin embargo, hay algunas diferencias en la forma en que se copian y pegan textos, dependiendo del sistema operativo y la herramienta utilizada.
 
 ---
 
-## Ejercicio 1 - 🧐 Verificar si una cadena comienza con 'Java'
+### 📋 **Copiar y pegar en una consola SSH**  
 
-### 📖 Descripción del ejercicio
+El manejo del **portapapeles** en una conexión SSH puede variar dependiendo de si estás usando **Windows**, **Linux** o **macOS**, así como si te conectas desde una terminal de comandos o desde **MobaXterm**.
 
-Escribe una función en JavaScript que determine si una cadena de texto dada comienza con la palabra 'Java' (sensible a mayúsculas y minúsculas). La función debe devolver `true` si la cadena comienza con 'Java' y `false` en caso contrario.
+### **📌 En Windows (MobaXterm y Git Bash)**
+✅ **Para copiar texto desde la consola remota:**  
+- Solo necesitas **seleccionar** el texto con el ratón.  
+- Automáticamente se copia al portapapeles.  No es necesario pulsar **Ctrl + C**.
 
-### ✍️ Entrada
+✅ **Para pegar texto en la consola remota:**  
+- Basta con **hacer clic con el botón derecho** del ratón.  
+- El contenido del portapapeles se pegará en la terminal.  No es necesario pulsar **Ctrl + V**.
 
-- Una cadena de texto.
-
-### 📤 Salida esperada
-
-- Un valor booleano: `true` si la cadena comienza con 'Java', `false` en caso contrario.
-
-### 🧪 Ejemplos
-
-```javascript
-comienzaConJava('JavaScript'); // Resultado esperado: true
-comienzaConJava('Java');       // Resultado esperado: true
-comienzaConJava('Python');     // Resultado esperado: false
-```
-
-
-### 🧠 Pistas
-
-🔍 Es posible que lo primero que se te ocurra sea extraer los primeros caracteres de la cadena y compararlos con la palabra 'Java'. Sin embargo...
-
-💡 Existe un método más directo y eficiente. Pregúntate:
-
-> ¿Hay algún método en los strings de JavaScript que permita verificar si una cadena comienza con una subcadena específica?
-
-📖 Revisa la documentación oficial sobre los métodos de los strings en JavaScript:
-
-[https://www.w3schools.com/js/js_string_methods.asp](https://www.w3schools.com/js/js_string_methods.asp)
+💡 **Nota:** En algunos casos, **Ctrl + V no funciona** en una terminal SSH en Windows.  
 
 ---
 
-## 🧠 Ejercicio 2 - Número más cercano a 100
+### **📌 En Linux/macOS (Terminal nativa)**
+✅ **Para copiar texto desde la consola remota:**  
+- Usa **Ctrl + Shift + C** o **Cmd + C** (en macOS) para copiar.  
 
-🎯 **Objetivo:**  
-Escribir una función que reciba dos números enteros positivos y devuelva el que esté más próximo a 100.
+✅ **Para pegar texto en la consola remota:**  
+- Usa **Ctrl + Shift + V** o **Cmd + V** (en macOS) para pegar.  
+- Alternativamente, puedes hacer clic derecho y seleccionar **Pegar**.  
 
-📥 **Entrada de ejemplo:**
-- `90`, `89`
+💡 **Nota:** En macOS/Linux, seleccionar texto no lo copia automáticamente al portapapeles como en MobaXterm en Windows.
 
-📤 **Salida esperada:**
-- `90`
 
-🔍 **Indicaciones:**
-- Ambos números serán mayores que 0.
-- Si ambos están a la misma distancia de 100, la función puede devolver cualquiera de ellos.
+## 🐧 Comandos básicos de Linux
 
-💡 **Pista:**  
-Piensa en cómo calcular la **distancia** entre cada número y el 100.
+En este apartado, vamos a ver los comandos esenciales de Linux que necesitaremos para instalar y desplegar nuestro servidor web. Si quieres profundizar más, puedes consultar [este manual completo de comandos Linux](https://linuxcommand.org/).
+
+## 📂 Gestión de directorios y archivos  
+
+- `ls` – Lista los archivos y directorios en la ubicación actual.  
+  ```bash
+  ls -l
+  ```
+- `cd <directorio>` – Cambia al directorio especificado.  
+  ```bash
+  cd /home/usuario/proyecto
+  ```
+- `mkdir <nombre>` – Crea un nuevo directorio.  
+  ```bash
+  mkdir mi_carpeta
+  ```
+- `rm <archivo>` – Elimina un archivo.  
+  ```bash
+  rm archivo.txt
+  ```
+- `rm -r <directorio>` – Borra un directorio y su contenido.  
+  ```bash
+  rm -r mi_carpeta
+  ```
+- `cp <origen> <destino>` – Copia archivos o directorios.  
+  ```bash
+  cp archivo.txt copia.txt
+  ```
+- `mv <origen> <destino>` – Mueve o renombra archivos.  
+  ```bash
+  mv archivo.txt nuevo_nombre.txt
+  ```
+
+## 🌐 Conexión y redes  
+
+- `ping <host>` – Comprueba la conectividad con otro equipo.  
+  ```bash
+  ping google.com
+  ```
+- `curl <URL>` – Realiza peticiones a una URL.  
+  ```bash
+  curl https://example.com
+  ```
+- `wget <URL>` – Descarga un archivo desde una URL.  
+  ```bash
+  wget https://ejemplo.com/archivo.zip
+  ```
+
+
+## 📌 Instalación de Node.js, NPM y PM2  
+
+En este apartado explicaremos cómo instalar y utilizar **Node.js**, **NPM** y **PM2** en una máquina remota para desplegar un servicio web de manera eficiente y persistente.
+
+## 🔹 ¿Qué es Node.js?  
+[Node.js](https://nodejs.org/) es un entorno de ejecución para JavaScript del lado del servidor basado en el motor V8 de Chrome. Permite ejecutar código JavaScript fuera del navegador, lo que lo hace ideal para construir aplicaciones web escalables y rápidas.  
+
+Lo utilizaremos para ejecutar nuestro servidor web basado en **Express.js**.
+
+## 🔹 ¿Qué es NPM?  
+[NPM (Node Package Manager)](https://www.npmjs.com/) es el gestor de paquetes de Node.js. Nos permite instalar librerías y herramientas necesarias para nuestro proyecto.  
+
+Lo usaremos para instalar las dependencias de nuestro servidor web.
+
+## 🔹 ¿Qué es PM2?  
+[PM2](https://pm2.keymetrics.io/) es un gestor de procesos para Node.js que nos permite ejecutar, monitorear y mantener en ejecución nuestras aplicaciones incluso después de un reinicio del sistema.  
+
+Las aplicaciones se caen, hay errores, excepciones... ¿qué te voy a contar? 😅
+
+Para que el servicio esté ejecutado a pesar de estas interrupciones. Emplearemos PM2 para asegurarnos de que nuestro servidor web siga activo en segundo plano.
 
 ---
 
+## 🛠 Instalación de Node.js y NPM  
+### 📌 Verificando si ya está instalado  
+Antes de instalar, revisemos si **Node.js** y **NPM** están disponibles en nuestro sistema:  
 
-
-
-
-## 🗓️ Ejercicio 3 - Determinar si un año es bisiesto en el calendario gregoriano
-
-### Descripción del problema
-Un año bisiesto en el calendario gregoriano es aquel que tiene **366 días** en lugar de los **365** habituales. Esto se logra añadiendo un día extra al mes de febrero, que pasa a tener 29 días.
-
-Los años bisiestos se introdujeron para mantener la sincronización del calendario con el año astronómico o estacional.
-
-📌 Para determinar si un año es bisiesto, se siguen estas reglas:
-
-1. Si el año es divisible por 4, pasa al paso 2. De lo contrario, **no es bisiesto**.
-2. Si el año es divisible por 100, pasa al paso 3. De lo contrario, **es bisiesto**.
-3. Si el año es divisible por 400, **es bisiesto**. De lo contrario, **no es bisiesto**.
-
-💡 Ejemplo: los años 2000 y 2016 son bisiestos, mientras que 1700, 1800 y 1900 no lo son.
-
-### Entrada y salida esperadas
-
-- **Entrada:** Un número entero que representa el año (por ejemplo, 2024)
-- **Salida:** Un valor booleano: `true` si el año es bisiesto, `false` en caso contrario
-
-**Ejemplo:**
-
-```javascript
-esBisiesto(2024);
+```sh
+node -v
+npm -v
 ```
 
-**Salida esperada:**
+Si estos comandos devuelven un número de versión, significa que ya están instalados.
 
-```javascript
-true
+### 📌 Instalación en Ubuntu  
+Ejecutamos los siguientes comandos para instalar la última versión estable de Node.js y NPM. Seguramente te pida confirmación de la **contraseña**.
+
+
+<!-- Si entro en esta web: obtengo la versión más moderna
+https://deb.nodesource.com/
+-->
+
+```sh
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt install -y nodejs
 ```
 
-### Diagrama de flujo
+Verificamos la instalación nuevamente:
 
-```mermaid
-graph TD;
-    A[Inicio] --> B{¿El año es divisible por 4?};
-    B -- Sí --> C{¿El año es divisible por 100?};
-    B -- No --> E[No es bisiesto];
-    C -- Sí --> D{¿El año es divisible por 400?};
-    C -- No --> F[Es bisiesto];
-    D -- Sí --> F;
-    D -- No --> E;
-    E --> G[Fin];
-    F --> G;
+```sh
+node -v
+npm -v
 ```
 
-### ¿Cómo comprobar que tu código funciona?
-
-Hay que hacer pruebas. De momento solo vamos a hacer `smoke tests`, es decir, comprobar que el código no tiene errores de sintaxis. Para ello, puedes copiar el código en la consola del navegador y ejecutarlo.
-
-Las pruebas unitarias las haremos más adelante.
-
----
-
-## Ejercicio 4 - 🌡️ Conversión de temperaturas entre Celsius y Fahrenheit
-
-### 📝 Enunciado
-Escribe un programa en JavaScript que convierta temperaturas entre las escalas Celsius y Fahrenheit.
-
-### 🔍 Descripción
-
-Las escalas Fahrenheit y Celsius son dos sistemas de medida de temperatura ampliamente utilizados.
-
-- **Fahrenheit**: en esta escala, el agua se congela a 32 °F y hierve a 212 °F.
-- **Celsius**: en esta escala, el agua se congela a 0 °C y hierve a 100 °C.
-
-Las fórmulas de conversión son:
-- De Fahrenheit a Celsius:
-
-```math
-C = \frac{5}{9} \times (F - 32)
-```
-
-- De Celsius a Fahrenheit:
-
-```math
-F = C \times \frac{9}{5} + 32
-```
-
-### 📥 Entrada esperada
-
-Un número que represente la temperatura y una indicación de la escala original (`'C'` o `'F'`).
-
-### 📤 Salida esperada
-
-La temperatura convertida a la escala opuesta, mostrando el valor original y el convertido.
-
-### 🧪 Casos de prueba sugeridos
+Debería devolver la versión de Node.js y NPM respectivamente, confirmando que la instalación fue exitosa.
 
 
-```javascript
-convertirTemperatura(60, 'C'); // "60°C son 140°F."
-convertirTemperatura(45, 'F'); // "45°F son 7.222°C."
+```sh
+usuario@labFTI:~$ node -v
+npm -v
+v22.22.0
+10.9.4
+
 ```
 
 
 ---
 
-## Ejercicio 5: 📝 Contar el número de vocales en una cadena
+## 🛠 Instalación de PM2  
+Una vez instalado Node.js y NPM, podemos instalar **PM2** con el siguiente comando usando NPM:
 
-**Objetivo:** desarrollar una función en JavaScript que cuente cuántas vocales (a, e, i, o, u) hay en una cadena dada.
-
-**Instrucciones:**
-
-1. Escribe una función que tome una cadena como entrada y devuelva el número total de vocales presentes en ella
-2. Considera que la cadena puede contener letras mayúsculas y minúsculas, así como otros caracteres
-3. Ten en cuenta que la solución más inmediata podría ser utilizar un bucle `for` para recorrer cada carácter de la cadena y contar las vocales. Sin embargo, existe una forma más sencilla y eficiente de lograrlo empleando los métodos de cadena y expresiones regulares en JavaScript, que permite obtener el resultado en una sola línea de código
-
-**Pista:**
-Investiga cómo utilizar el método `match` de las cadenas junto con expresiones regulares para identificar y contar caracteres específicos en una cadena
-
-<details>
-<summary>💡 Solución en una línea de código</summary>
-
-```javascript
-const contarVocales = cadena => (cadena.match(/[aeiou]/gi) || []).length;
+```sh
+sudo npm install -g pm2
 ```
 
-**Nota:** en la solución proporcionada, la expresión regular `/[aeiou]/gi` busca todas las vocales en la cadena sin distinguir entre mayúsculas y minúsculas. El método `match` devuelve un array con todas las coincidencias, y al obtener su longitud con `.length`, se obtiene el número total de vocales. Si no se encuentran vocales, `match` devuelve `null`, por lo que se utiliza `|| []` para asegurar que siempre se trabaje con un array y evitar errores.
+Verificamos que PM2 está correctamente instalado con:
 
-</details>
-<br>
-
-**Ejemplo de uso:**
-
-```javascript
-console.log(contarVocales("JavaScript")); // Output: 3
-console.log(contarVocales("w3resource.com")); // Output: 5
+```sh
+pm2 -v
 ```
 
----
+Con este comando obtendrás un número de versión que confirma que PM2 se ha instalado correctamente. Y además un pequeño manual de uso de PM2.
 
-## Ejercicio 6 - 🔢 El número más grande 🧪
+Con esto, ya tenemos un entorno listo para ejecutar nuestro servicio web de forma persistente. 🚀
 
-### Descripción  
-Queremos trabajar con arrays en JavaScript. En este ejercicio deberás implementar una función que reciba un array de números y devuelva el número **más grande** que contiene.
+## 🌍 Instalación del **Servidor Web FTI**  
 
-### 🧠 Objetivo  
-Practicar el uso de estructuras de datos como arrays y afianzar el uso de bucles o métodos integrados para recorrerlos.
+En esta sección explicaremos la instalación de un servidor web ligero para servir archivos estáticos y su mantenimiento.  
 
-### ✍️ Instrucciones  
-1. Crea una función con un nombre descriptivo.
-2. Asegúrate de que la función reciba **un solo parámetro**, que será un array de números.
-3. La función debe **devolver** el número más grande del array.
-4. Puedes asumir que el array tiene al menos un número.
+## 📌 Características  
 
-### 🧾 Ejemplo de entrada
-```js
-[3, 7, 2, 9, 5]
+- 📂 Sirve archivos solo desde `html/` y sus subdirectorios (`css/`, `js/`, `img/`).  Por defecto, está el laboratorio 3 de CSS.
+- 📡 Registra cada conexión en la consola.  
+- 🚀 Fácil de ejecutar y configurar.  
+- 🔄 Se mantiene en ejecución con [PM2](https://pm2.keymetrics.io/) para mayor estabilidad.  
+
+## 🛠️ Instalación  
+
+### 1️⃣ Clonar el repositorio  
+Para obtener el código fuente, ejecuta:  
+
+```sh
+git clone https://github.com/DiegoMartindeAndres/servidor-FTI
 ```
 
-### ✅ Salida esperada
-```js
-9
+Con esto, estás clonando el repositorio de GitHub del servidor web FTI en tu máquina remota para poder empezar a trabajar con él.
+
+### 2️⃣ Acceder al directorio del proyecto  
+```sh
+cd servidor-FTI/
+```
+
+### 3️⃣ Instalar dependencias  
+El servidor utiliza Node.js y Express. Instala todas las dependencias ejecutando:  
+
+```sh
+npm install
+```
+
+### 4️⃣ Configurar PM2 (Opcional pero Recomendado)  
+Vamos a usar PM2 para mantener nuestro servidor en ejecución, incluso después de cerrar la conexión [SSH](https://www.ssh.com/academy/ssh). Para iniciar el servidor con PM2, ejecuta:  
+
+```sh
+pm2 start index.js --name servidor-FTI
+```
+
+Este comando inicia el servidor y lo nombra como `servidor-FTI` para una fácil identificación.
+
+
+Enhorabuena!! ¡Tu servidor web ya está en marcha! 🎉
+
+Puedes acceder desde cualquier navegador a la URL:
+
+```
+http://virtual.infor.uva.es:PUERTO_HTTP/abcd1234
+```
+
+Debes sustituir `PUERTO_HTTP` por el puerto que te ha sido concedido para el servicio web. Y `abcd1234` es la ruta por defecto para acceder a tu servidor y debes renombrarlo por la ruta que se te ha asignado, renombrando el directorio que tienes en `html/` por la ruta que se te ha asignado. Con el siguiente comando puedes renombrar el directorio:
+
+```sh
+mv html/abcd1234 html/RUTA
+``` 
+
+Para ver los servidores en ejecución, usa:
+
+```sh
+pm2 list
+```
+
+Se te mostrará una tabla con los servidores en ejecución y su estado. Si está vacía significa que no tendrás nada en ejecución. Y lo ideal es que solo tengas un servidor en ejecución, el servidor-FTI, para evitar confusiones.
+
+Para asegurarte de que se inicie automáticamente tras un reinicio del sistema:  
+
+```sh
+pm2 startup
+pm2 save
+```
+
+### 🔴 Apagar un servicio en PM2  
+Si en algún momento necesitas detener el servidor, puedes hacerlo con:
+
+```sh
+pm2 stop servidor-FTI
+```
+
+Si deseas eliminarlo completamente de la lista de procesos de PM2:
+
+```sh
+pm2 delete servidor-FTI
+```
+
+Esto asegurará que el servicio no se reinicie automáticamente después de un reinicio del sistema.
+
+### 5️⃣ Iniciar el servidor manualmente (sin usar PM2)
+Si no usas PM2, puedes ejecutar el servidor directamente con:  
+
+```sh
+node index.js
+```
+
+Esta opción está bien para hacer pruebas, pero recuerda que si cierras la conexión SSH, el servidor se detendrá.
+
+## 📁 Estructura del Proyecto  
+
+```
+servidor-FTI/
+│── index.js               # Archivo principal del servidor
+│── package.json           # Configuración del proyecto
+│── html/RUTA              # Carpeta pública
+│        │── index.html    # Página principal
+│        │── css/          # Hojas de estilo
+│        │── js/           # Scripts
+│        │── img/          # Imágenes
+```
+
+## 🌐 Acceso al Servidor  
+
+Una vez en ejecución, el servidor estará disponible en:  
+
+```
+http://virtual.infor.uva.es:PUERTO_HTTP/RUTA
 ```
 
 
----
+🎉 ¡El Último Paso hacia la Gloria! 🎉
 
-## Ejercicio 7: 🔁 Invirtiendo un array
+🔹 No olvides reemplazar PUERTO_HTTP por el puerto que te ha sido concedido.
 
-En este ejercicio vamos a trabajar con **arrays en JavaScript**, concretamente con la inversión de su contenido. El objetivo es que el estudiante entienda cómo manipular los elementos de un array utilizando bucles y métodos incorporados del lenguaje.
+Ha llegado el momento de la verdad. Abre tu navegador y accede a la URL correspondiente.
 
-### 🎯 Objetivo
+Si en tu pantalla aparece tu web funcionando a la perfección...
 
-Dado un array de números, crea un nuevo array con los elementos en orden inverso.
+🌟 ¡ENHORABUENA! Has conquistado este manual con éxito. 🌟
 
-### 📥 Entrada
-
-Un array de números, por ejemplo:
-
-```js
-[1, 2, 3, 4, 5]
-```
-
-### 📤 Salida esperada
-
-```js
-[5, 4, 3, 2, 1]
-```
+🚀 ¡Ahora eres el maestro de tu propio servidor web! 
 
 
-### 🧠 Parte 1: Usando un bucle
-
-Escribe una función que reciba un array y devuelva uno nuevo con los elementos en orden inverso, utilizando un bucle `for` o `while`.
-
-- Puedes usar un array auxiliar donde vayas insertando los elementos.
-
-> ✨ Consejo: Empieza recorriendo el array original desde el último índice hasta el primero.
+<div align="center">
+    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjdlanduNTQyZW51OXE4MGMydHg3c3NnYW1qazBkNjN6czlrNjNleCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5yLgoctdubLO8XGodOM/giphy.gif" alt="Enhorabuena" width="75%">
+</div>
 
 
-### ⚙️ Parte 2: Usando el método `.reverse()`
 
-Una vez tengas la solución usando un bucle, intenta hacer lo mismo utilizando el método `reverse()` de los arrays en JavaScript.
+## 🔧 Personalización  
 
-> 📚 Puedes consultar cómo funciona este método en la documentación oficial de MDN:  
-> [Array.prototype.reverse() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse)
+Puedes agregar más archivos dentro de `html/` y sus subdirectorios (`css/`, `js/`, `img/`), y el servidor los servirá automáticamente.  
 
 
----
+## 🔧 Configurar la API REST 🧩
 
-## 🧮 Ejercicio 8 - Cálculo del área de un triángulo a partir de sus tres lados
+Nuestro servidor web también incluye una API Rest para gestionar entidades. Para configurarla correctamente, sigue estos pasos:
 
-### ✍️ Enunciado
-
-Escribe una función en JavaScript que reciba **tres números** como parámetros, correspondientes a los tres lados de un triángulo (por ejemplo, `a`, `b` y `c`), y devuelva el **área** del triángulo usando la **fórmula de Herón**.
-
-🔢 **Ejemplo**  
-Entrada: lados `a = 5`, `b = 6`, `c = 7`  
-Salida esperada: `14.6969...`
-
----
-
-### 🧠 Pistas
-
-Para resolver este ejercicio, necesitarás:
-
-1. **Calcular el semiperímetro** del triángulo:
+1. **Editar el fichero index.js**: OJO! no confundir con el `index.html` de la práctica.
    
-   📌 Fórmula:
+   1. Abre el fichero `index.js` en un editor de texto. Podéis hacerlo con nano, que es un editor de texto en consola, con el siguiente comando:
 
-   ```
-   s = (a + b + c) / 2
-   ```
+      ```sh
+      nano index.js
+      ```
+   2. Busca la línea que contiene `const RUTA_API = '/abcd1234/api/entidades';` 
+   3. Sustituye `abcd1234` por la ruta que te haya sido asignada. Por ejemplo, si tu ruta es `a1b2c3d4`, la línea quedaría así: `const RUTA_API = '/a1b2c3d4/api/entidades';`
+   4. Guarda los cambios.
+2. **Parar el servidor y volver a arrancar**: Esto ya deberías saberlo hacer. Si estás usando PM2, puedes hacerlo con los siguientes comandos:
 
-2. **Aplicar la fórmula de Herón** para obtener el área:
-
-   📌 Fórmula:
-
-   ```
-   área = √[s(s - a)(s - b)(s - c)]
-   ```
-
-3. Para calcular la raíz cuadrada en JavaScript, puedes usar:
-
-   ```
-   Math.sqrt(x)
+   ```sh
+   pm2 stop servidor-FTI
+   pm2 start servidor-FTI
    ```
 
+   Si estás ejecutando el servidor manualmente con `node index.js`, simplemente detén el proceso (con Ctrl + C) y vuelve a ejecutarlo.
+
+3. **Haz una prueba**: accediendo a la URL de tu servidor web en el navegador. Deberías ver la página de inicio del servidor de FTI.
+4. **Acceder a tu servidor**: Para acceder a tu práctica, abre el navegador y escribe la siguiente URL:
+
+    ```
+    http://virtual.infor.uva.es:<puerto_http>/abcd1234/api/entidades
+    ```
+
+   * Debes sustituir `<puerto_http>` por el puerto que se te ha asignado para acceder al servidor web. 
+   * Debes cambiar `abcd1234` por el valor que te haya sido asignado.
+
+    Si todo ha ido bien, deberías ver un JSON con la lista de entidades de ejemplo, que deberás cambiar, pero eso se explica más adelante.
+
+
+## 🧾 Tabla resumen de la API que proporciona el servidor personal en la nube
+
+| Verbo HTTP | Ruta                          | Parámetros               | Acción        | Código respuesta | Descripción                                  |
+| ---------- | ----------------------------- | ------------------------ | ------------- | ---------------- | -------------------------------------------- |
+| GET        | `/abcd1234/api/entidades`     | —                        | Obtener todas | 200              | Devuelve todas las entidades en formato JSON |
+| GET        | `/abcd1234/api/entidades/:id` | `id` (URL)               | Obtener una   | 200 / 404        | Devuelve una entidad por ID                  |
+| POST       | `/abcd1234/api/entidades`     | JSON body `{id, nombre}` | Crear         | 201 / 400        | Crea una nueva entidad                       |
+| DELETE     | `/abcd1234/api/entidades/:id` | `id` (URL)               | Eliminar      | 200 / 404        | Borra una entidad por ID                     |
+
+### Nota sobre las entidades
+
+En un entorno profesional real, lo habitual sería que nuestro servidor no trabajase con un fichero local, sino que estuviese conectado a una **base de datos**.
+
+Para este tipo de aplicaciones suelen utilizarse bases de datos **NoSQL**, especialmente cuando trabajamos con APIs REST y datos en formato JSON. Algunos ejemplos muy utilizados en la industria son:
+
+* 🟢 **MongoDB** – Base de datos documental muy popular en entornos Node.js.
+* 🔴 **Redis** – Base de datos en memoria, muy rápida, ideal para caché o datos temporales.
+* 🔵 **Cassandra** – Pensada para grandes volúmenes de datos distribuidos.
+* 🟣 **CouchDB** – Base de datos documental basada en JSON.
+* 🟡 **Firebase Firestore** – Base de datos NoSQL en la nube. [Esta BBDD la usaremos en la asignatura optativa Plataformas de Software Móvil de tercero]
+* 🟠 **DynamoDB** – Servicio NoSQL gestionado de AWS.
+
+En todos estos casos, los datos se almacenan de forma estructurada y eficiente, permitiendo búsquedas rápidas, indexación, escalabilidad y concurrencia entre múltiples usuarios.
 
 ---
 
-## 🧠 Ejercicio 9 - Fechas en JavaScript
+### 📂 ¿Qué hacemos nosotros en este servidor?
 
-### 📋 Enunciado
-
-Escribe una función en JavaScript que muestre en consola la **fecha y hora actual** en el siguiente formato:
+En nuestro caso, para simplificar la instalación y evitar dependencias adicionales, la información se lee desde un fichero que está en la raíz del servidor y que se llama:
 
 ```
-Hoy es: Martes.
-Hora actual: 10 PM : 30 : 38
+entidades.json
 ```
 
-🔹 El formato debe indicar:
-- El **día de la semana** en español.
-- La **hora en formato de 12 horas**, con indicación de AM o PM.
-- Los **minutos** y **segundos** actuales.
+En el ejemplo proporcionado, este fichero contiene **4 entidades** relacionadas con **atracciones turísticas**.
+
+El servidor:
+
+* 🔎 Solo realiza búsquedas por el campo `id`.
+* 🧱 Permite que cada entidad tenga los atributos que queramos.
+* 💾 Almacena los datos directamente en memoria tras leer el fichero.
+
+Es decir, si añadimos más atributos (por ejemplo `descripcion`, `ciudad`, `pais`, `precio`, etc.), el servidor los aceptará y los devolverá en el JSON sin necesidad de modificar la estructura.
 
 ---
 
-#### 🧠 Pequeño pseudocódigo
+### ⚠️ ¿Es esto eficiente?
 
-```
-1. Crear una variable con la fecha actual usando Date()
-2. Crear un array con los nombres de los días de la semana
-3. Obtener el número de día con getDay() y buscar el nombre en el array
-4. Obtener la hora, minutos y segundos
-5. Convertir la hora de 24h a 12h y añadir AM o PM
-6. Imprimir el mensaje en el formato indicado
-```
+No especialmente.
 
-### 💡 Pistas
+Trabajar con ficheros planos como almacenamiento principal:
 
-#### 📆 Uso del objeto `Date()`
+* ❌ Es **ineficiente** cuando tenemos cientos, miles o millones de registros.
+* ❌ No permite indexación avanzada.
+* ❌ No está pensado para accesos concurrentes.
+* ❌ No escala bien en entornos reales.
 
-JavaScript tiene un objeto nativo llamado `Date` que nos permite trabajar fácilmente con fechas y horas actuales:
+Sin embargo…
 
-```js
-const ahora = new Date();
-```
+Para nuestro servidor docente y para entender cómo funciona una API REST básica, esta solución es:
 
-Este objeto tiene métodos para obtener partes específicas de la fecha, como:
+* ✅ Sencilla
+* ✅ Fácil de entender
+* ✅ Fácil de desplegar
+* ✅ Sin dependencias externas
 
-- `getDay()` → devuelve el día de la semana (0 es Domingo, 1 es Lunes, ..., 6 es Sábado)
-- `getHours()` → devuelve la hora en formato de 24h (de 0 a 23)
-- `getMinutes()` → devuelve los minutos
-- `getSeconds()` → devuelve los segundos
+Y para los objetivos de la asignatura **FTI**, es más que suficiente 🚀
 
+## 📜 Licencia  
 
-#### 🗓️ ¿Por qué crear un array con los días de la semana?
-
-Porque el método `.getDay()` devuelve un **número del 0 al 6**, pero tú necesitas mostrar el **nombre del día** (“Lunes”, “Martes”, etc.).
-
-Por eso, lo ideal es usar un array donde el índice corresponda al valor numérico de `getDay()`:
-
-```js
-const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-```
-
-Así, puedes acceder al nombre con:
-
-```js
-const nombreDia = dias[ahora.getDay()];
-```
-
----
-
-## Ejercicio 10: 🎄 Días restantes hasta la próxima Navidad
-
-Escribe un programa en JavaScript que calcule el número de días que faltan para la próxima Navidad (25 de diciembre).
-
-**Entrada esperada:**
-
-- La fecha actual
-
-**Salida esperada:**
-
-- Número de días restantes hasta el 25 de diciembre del año en curso
-
-**Pistas:**
-
-- Utiliza el objeto `Date` de JavaScript para obtener la fecha actual y para establecer la fecha de Navidad
-- Recuerda que los meses en JavaScript se indexan desde 0 (enero) hasta 11 (diciembre)
-- Si la fecha actual es posterior al 25 de diciembre, deberás calcular los días restantes hasta el 25 de diciembre del año siguiente
-
-**Ejemplo de uso del objeto `Date`:**
-
-```javascript
-// Obtener la fecha actual
-const hoy = new Date();
-
-// Crear un objeto Date para el 25 de diciembre del año actual
-const navidad = new Date(hoy.getFullYear(), 11, 25);
-```
-
----
-
-
-## 🧪 Ejercicio 11: El número más repetido
-
-### Descripción
-
-En este ejercicio trabajarás con arrays y estructuras de datos para analizar la frecuencia de los elementos. El objetivo es encontrar el número que más veces se repite en un array dado.
-
-Si hay varios números con la misma frecuencia máxima, debes devolver **el que aparece primero** entre ellos.
-
-### 🎯 Objetivo
-
-Escribir una función en JavaScript que reciba un array de números y devuelva el número que más veces se repite.
-
-### 📥 Entrada
-
-Un array de números enteros, por ejemplo:
-
-```javascript
-[3, 1, 3, 2, 1, 3, 2, 1]
-```
-
-### 📤 Salida esperada
-
-```javascript
-3
-```
-
-### ℹ️ Notas
-
-- Puedes asumir que el array no estará vacío.
-- Si hay empate, se devuelve el número que **aparece antes** en el array original con la máxima frecuencia.
-
-### 🧠 Pistas
-
-- Considera usar objetos o estructuras [🗺️ Map](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Map) para contar apariciones.
-- Piensa en cómo llevar un seguimiento del orden de aparición mientras calculas frecuencias.
-
----
-
-
-## 🧑‍💻 Ejercicio 12: Reemplazar cada carácter en una cadena por el siguiente en el alfabeto
-En este ejercicio, desarrollarás una función en JavaScript que toma una cadena de texto y reemplaza cada letra por la siguiente en el alfabeto. Además, las vocales resultantes deben convertirse a mayúscula.
-
-### 📜 Descripción
-- Cada letra en la cadena debe ser sustituida por la siguiente letra en el alfabeto. Por ejemplo, `'a'` se convierte en `'b'`, `'b'` en `'c'`, y así sucesivamente.
-- Las vocales (`a`, `e`, `i`, `o`, `u`) **resultantes** después de la sustitución deben transformarse a mayúsculas.
-- Los caracteres no alfabéticos deben permanecer sin cambios.
-
-### 🔍 Ejemplo
-
-**Entrada**
-
-```
-"javascript"
-```
-
-
-**Proceso:** 
-1. `'j'` → `'k'`
-2. `'a'` → `'b'`
-3. `'v'` → `'w'`
-4. `'a'` → `'b'`
-5. `'s'` → `'t'`
-6. `'c'` → `'d'`
-7. `'r'` → `'s'`
-8. `'i'` → `'j'`
-9. `'p'` → `'q'`
-10. `'t'` → `'u'` (como `u` es vocal, se convierte en `U`)
-
-**Salida**
-
-```
-"kbwbtdsjqU"
-```
-
-
-### 🛠️ Instrucciones
-1. Crea una función en JavaScript que acepte una cadena de texto como parámetro.
-2. Itera sobre cada carácter de la cadena y aplica las transformaciones descritas anteriormente.
-3. Devuelve la nueva cadena transformada.
-
-### 🔑 Puntos a considerar
-
-- Asegúrate de manejar correctamente los límites del alfabeto. Por ejemplo, la letra `'z'` debe convertirse en `'a'`.
-- Mantén los caracteres no alfabéticos sin cambios.
-
-### 📈 Diagrama de flujo
-
-
-```mermaid
-graph TD
-    A[Inicio] --> B[Leer cadena de entrada]
-    B --> C[Inicializar cadena de salida como vacía]
-    C --> D{¿Quedan caracteres por procesar?}
-    D -->|No| E[Mostrar cadena de salida]
-    E --> F[Fin]
-    D -->|Sí| G[Obtener el siguiente carácter]
-    G --> H{¿Es una letra?}
-    H -->|No| I[Agregar carácter sin cambios a la cadena de salida]
-    I --> D
-    H -->|Sí| J{¿Es 'z' o 'Z'?}
-    J -->|Sí| K[Convertir 'z' a 'a' o 'Z' a 'A']
-    K --> L{¿Es una vocal?}
-    J -->|No| M[Reemplazar carácter por el siguiente en el alfabeto]
-    M --> L
-    L -->|Sí| N[Convertir carácter a mayúscula]
-    N --> O[Agregar carácter transformado a la cadena de salida]
-    L -->|No| O
-    O -->D
-```
-
-
----
-
-## 🌐 Ejercicios DOM (en navegador) — 5 ejercicios incrementales
-
-Estos ejercicios se ejecutan en **navegador** y son **reactivos a eventos** (clic, input, teclado, carga de página…).
-
-### ✅ Código base (ya preparado)
-
-- Descarga: [Descargar el código base](./code/DOM.zip) 
-- Descomprime el zip y coloca la carpeta `DOM` dentro de tu proyecto (por ejemplo, en `labo05.1/code/DOM`).
-- Abre en el navegador: `index.html`
-- Edita (está vacío a propósito): `script.js`
-- Estilos (no hace falta tocarlos): `style.css`
-
-📌 Reglas para estos ejercicios:
-- Usa el objeto `document`.
-- Usa **casi siempre** `document.getElementById(...)` para obtener elementos.
-- Conecta la lógica con `addEventListener(...)` (programación orientada a eventos).
-- Para escribir en pantalla, usa preferiblemente `textContent`.
-
----
-
-### DOM-1) Contador con botones (muy fácil)
-
-**Objetivo:** al pulsar `+1` aumenta el número mostrado; al pulsar `Reset` vuelve a 0.
-
-**IDs a usar:** `btnIncrement`, `btnReset`, `counterValue`
-
-**Requisitos mínimos:**
-- `btnIncrement` suma 1 al valor visible en `counterValue`.
-- `btnReset` pone `counterValue` a `0`.
-
----
-
-### DOM-2) Saludo (fácil)
-
-**Objetivo:** leer el nombre escrito y mostrar un saludo.
-
-**IDs a usar:** `nameInput`, `btnGreet`, `greetOutput`
-
-**Requisitos mínimos:**
-- Al hacer clic en `btnGreet`, leer `nameInput.value`.
-- Si está vacío (o solo espacios), mostrar en `greetOutput`: `Escribe un nombre`.
-- Si tiene contenido, mostrar: `Hola, NOMBRE!`.
-
-**Extra (recomendado):**
-- Al pulsar Enter dentro del input, debe hacer lo mismo que el botón (evento `keydown` o `keyup`).
-
----
-
-### DOM-3) Validación de email en vivo (medio)
-
-**Objetivo:** validar el email mientras se escribe y habilitar/deshabilitar el botón.
-
-**IDs a usar:** `emailInput`, `emailError`, `btnSubmit`
-
-**Requisitos mínimos:**
-- En el evento `input` de `emailInput`, comprobar si el email es válido.
-- Si NO es válido:
-   - `emailError.textContent = 'Email inválido'`
-   - `btnSubmit.disabled = true`
-- Si SÍ es válido:
-   - `emailError.textContent = ''`
-   - `btnSubmit.disabled = false`
-
-**Pista:** un regex razonable para empezar es `^[^\s@]+@[^\s@]+\.[^\s@]+$`.
-
----
-
-### DOM-4) Lista dinámica con borrar ítems (medio-difícil)
-
-**Objetivo:** añadir elementos a una lista y poder eliminarlos.
-
-**IDs a usar:** `itemInput`, `btnAddItem`, `itemList`, `listHint`
-
-**Requisitos mínimos:**
-- Al hacer clic en `btnAddItem`:
-   - Leer el texto de `itemInput`.
-   - Si está vacío, no añadir nada.
-   - Si tiene texto, añadir un `<li>` dentro de `itemList`.
-   - Vaciar el input al terminar.
-- Cada `<li>` debe incluir un botón “Borrar” (por ejemplo, un `<button type="button">Borrar</button>`).
-- Al pulsar “Borrar” en un ítem, ese `<li>` desaparece.
-- `listHint` debe decir `(La lista está vacía)` cuando no haya elementos y estar vacío cuando sí haya.
-
-**Pista (eventos):** puedes usar un único listener en `itemList` y mirar `event.target` (delegación de eventos).
-
----
-
-### DOM-5) Nota persistente con `localStorage` (difícil)
-
-**Objetivo:** guardar automáticamente lo escrito y recuperarlo al recargar la página.
-
-**IDs a usar:** `noteArea`, `btnClearNote`, `noteStatus`
-
-**Requisitos mínimos:**
-- Al cargar la página (evento `DOMContentLoaded`):
-   - Leer una clave de `localStorage` (por ejemplo, `labo05_1_note`).
-   - Si existe, poner ese texto en `noteArea.value`.
-- En el evento `input` de `noteArea`:
-   - Guardar el contenido en `localStorage`.
-   - Actualizar `noteStatus` con un mensaje corto, por ejemplo: `Guardado`.
-- Al hacer clic en `btnClearNote`:
-   - Vaciar el textarea.
-   - Borrar la clave en `localStorage`.
-   - Actualizar `noteStatus` (por ejemplo: `Nota borrada`).
-
-
-### 🌟 Desafío adicional
-
-Investiga sobre el [**cifrado César**](https://es.wikipedia.org/wiki/Cifrado_C%C3%A9sar), una técnica de cifrado por sustitución en la que cada letra del texto se reemplaza por otra letra un número fijo de posiciones más adelante en el alfabeto. ¿Cómo podrías modificar tu función para implementar este tipo de cifrado? 🔐
-
-## 📚 Recursos adicionales
-
-En las siguientes webs puedes encontrar más ejercicios para practicar tus habilidades de programación en JavaScript. Además, en muchos casos se incluyen también las soluciones, por si quieres comparar tu implementación con la propuesta o resolver dudas sobre los ejercicios de este laboratorio:
-
-- 🌐 [W3Schools - JavaScript Exercises](https://www.w3schools.com/js/exercise_js.asp)  
-- 🌐 [W3Schools - Más ejercicios de JavaScript](https://www.w3schools.com/js/js_exercises.asp)  
-- 🌐 [W3Resource - JavaScript Exercises](https://www.w3resource.com/javascript-exercises/)
+Este proyecto está bajo la licencia [MIT](LICENSE).  

@@ -843,7 +843,7 @@ Estos ejercicios se ejecutan en **navegador** y son **reactivos a eventos** (cli
 
 ### ✅ Código base (ya preparado)
 
-- Descarga: `labo05.1/code/DOM.zip`
+- Descarga: [Descargar el código base](./code/DOM.zip) 
 - Descomprime el zip y coloca la carpeta `DOM` dentro de tu proyecto (por ejemplo, en `labo05.1/code/DOM`).
 - Abre en el navegador: `index.html`
 - Edita (está vacío a propósito): `script.js`
