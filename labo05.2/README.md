@@ -668,5 +668,5 @@ async function leerArchivo() {
 
 ### ✅ Conclusión
 
-Este ejercicio te servirá para interiorizar el comportamiento **asíncrono** de Node.js al acceder al sistema de archivos. Comprobarás por ti mismo cómo las técnicas modernas como `promesas` y `async/await` simplifican mucho la gestión de tareas retardadas.
+Este ejercicio te servirá para interiorizar el comportamiento **asíncrono** de JavaScript al acceder al sistema de archivos. Comprobarás por ti mismo cómo las técnicas modernas como `promesas` y `async/await` simplifican mucho la gestión de tareas retardadas.
 
