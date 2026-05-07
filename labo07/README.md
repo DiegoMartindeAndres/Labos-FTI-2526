@@ -35,7 +35,7 @@ $("body").css("background-color", "red") // Cambia estilo
 
 Ejemplo guiado (código de inicio):
 
-- [Mundo Capibara](code/Inicio/index.html)
+- [Mundo Capibara](code/capibara.zip)
 
 ---
 
@@ -48,13 +48,13 @@ En la versión publicada del laboratorio tendrás un `.zip` con el proyecto. El 
 1. Descarga el ZIP desde GitHub (botón **Code** → **Download ZIP**) o desde el enlace que te proporcione el profesor.
 2. Descomprime el ZIP.
 3. Abre la carpeta descomprimida en Visual Studio Code.
-4. Abre el ejemplo guiado en el navegador: [code/Inicio/index.html](code/Inicio/index.html)
+4. Abre el ejemplo guiado en el navegador: [code/capibara.zip](code/capibara.zip)
 
 ### Opción B: clonar con Git (si ya lo usas)
 
 1. Clona el repositorio.
 2. Abre la carpeta en VS Code.
-3. Abre [code/Inicio/index.html](code/Inicio/index.html) en tu navegador.
+3. Abre [code/capibara.zip](code/capibara.zip) en tu navegador.
 
 Sugerencia: cuando estudies el código, ten **dos ventanas abiertas**: el navegador (para probar) y VS Code (para leer/modificar).
 
@@ -69,7 +69,7 @@ Antes de hacer los ejercicios, analiza el ejemplo guiado “Mundo Capibara”:
 - ¿Qué cambia en la página al hacer click?
 - ¿Qué métodos de jQuery se están usando y por qué?
 
-En [code/Inicio/index.html](code/Inicio/index.html) encontrarás:
+En [code/capibara.zip](code/capibara.zip) encontrarás:
 
 - Un párrafo con id `descripcion`.
 - Una imagen con id `fotoCapibara`.
@@ -171,7 +171,7 @@ Qué hace:
 
 En este laboratorio **sí vas a reutilizar la página “Mundo Capibara”** como base. Harás los ejercicios dentro del mismo archivo:
 
-- [code/Inicio/index.html](code/Inicio/index.html)
+- [code/capibara.zip](code/capibara.zip)
 
 En ese archivo encontrarás una sección “Zona de práctica” con el HTML necesario para los ejercicios. Tu trabajo consistirá en **añadir el código jQuery** (en el mismo `<script>` del final) para que cada ejercicio funcione.
 
@@ -219,7 +219,7 @@ Desafío: crea un sistema tipo “to-do list” donde:
 - Se puedan marcar como completadas (tachadas).
 - Se puedan eliminar.
 
-El HTML base para empezar ya está incluido en la “Zona de práctica” de [code/Inicio/index.html](code/Inicio/index.html). No hay solución para este ejercicio.
+El HTML base para empezar ya está incluido en la “Zona de práctica” de [code/capibara.zip](code/capibara.zip). No hay solución para este ejercicio.
 
 ---
 
