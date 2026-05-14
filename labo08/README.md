@@ -44,7 +44,7 @@ sequenceDiagram
 
     S-->>N: Respuesta JSON / texto
 
-    Note left of N: onload() se ejecuta aquí\n→ actualizamos el DOM
+    Note left of N: onload() se ejecuta aquí (actualizamos el DOM)
 ```
 
 ---
