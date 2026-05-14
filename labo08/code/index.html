@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laboratorio 8 - Base AJAX</title>
+  <!-- Si quieres trabajar con jQuery, descomenta esta linea -->
+  <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #d1d5db;
+      --brand: #0f766e;
+      --brand-2: #0ea5a4;
+      --danger: #b91c1c;
+      --ok: #166534;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 15%, #dbeafe 0, transparent 35%),
+        radial-gradient(circle at 85% 10%, #ccfbf1 0, transparent 35%),
+        var(--bg);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      width: min(1000px, 92vw);
+      margin: 2rem auto;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.07);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2vw + 1rem, 2.2rem);
+    }
+
+    h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.1rem;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+      align-items: center;
+    }
+
+    input,
+    button {
+      font: inherit;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+
+    button {
+      cursor: pointer;
+      border-color: var(--brand);
+      color: white;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    }
+
+    button:hover {
+      filter: brightness(1.05);
+    }
+
+    #resultado {
+      margin-top: 0.8rem;
+      min-height: 2.5rem;
+      padding: 0.75rem;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      background: #f9fafb;
+    }
+
+    .media {
+      margin-top: 0.75rem;
+      width: min(340px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      display: none;
+    }
+
+    #estadoSubida,
+    #estado {
+      margin-top: 0.6rem;
+      min-height: 1.4rem;
+    }
+
+    .hint {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .ok {
+      color: var(--ok);
+    }
+
+    .error {
+      color: var(--danger);
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>Laboratorio AJAX - Plantilla inicial</h1>
+      <p>HTML listo para empezar. Completa tu logica en JavaScript segun el README.</p>
+      <div id="resultado">Aqui puedes mostrar resultados de peticiones.</div>
+      <p class="hint">Consejo: usa este bloque para recetas, estados, errores o mensajes generales.</p>
+    </section>
+
+    <section class="card">
+      <h2>Ejercicio 1 - Receta (TheMealDB)</h2>
+      <div class="row">
+        <button id="buscarReceta">Buscar receta</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Ejercicio 4 / 6 - Personaje Rick and Morty</h2>
+      <div class="row">
+        <input type="number" id="idPersonaje" placeholder="ID (1-826)" min="1" max="826" />
+        <button id="buscarPersonaje">Buscar personaje</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Ejercicio 5A - Foto aleatoria de gato</h2>
+      <div class="row">
+        <button id="nuevaFoto">Nueva foto de gato</button>
+      </div>
+      <img id="fotoGato" class="media" src="" alt="Foto de gato" />
+    </section>
+
+    <section class="card">
+      <h2>Ejercicio 5B - Subida de imagen (XHR)</h2>
+      <div class="row">
+        <input type="file" id="imagenGato" accept="image/*" />
+        <button id="subirBtn">Subir imagen</button>
+      </div>
+      <p id="estadoSubida"></p>
+      <img id="fotoSubida" class="media" src="" alt="Imagen subida" />
+    </section>
+
+    <section class="card">
+      <h2>Ejercicio 7 - Subida con jQuery</h2>
+      <div class="row">
+        <button id="subirImagen">Subir imagen (jQuery)</button>
+      </div>
+      <p id="estado"></p>
+      <img id="preview" class="media" src="" alt="Preview subida" />
+    </section>
+  </main>
+
+  <script>
+    // Base minima: referencias y eventos vacios para que el alumnado complete la logica.
+    const resultado = document.getElementById("resultado");
+
+    const buscarRecetaBtn = document.getElementById("buscarReceta");
+    const buscarPersonajeBtn = document.getElementById("buscarPersonaje");
+    const nuevaFotoBtn = document.getElementById("nuevaFoto");
+    const subirBtn = document.getElementById("subirBtn");
+    const subirImagenBtn = document.getElementById("subirImagen");
+
+    function mensajeBase(texto) {
+      resultado.textContent = texto;
+    }
+
+    buscarRecetaBtn.addEventListener("click", function () {
+      mensajeBase("TODO: implementar GET de receta");
+    });
+
+    buscarPersonajeBtn.addEventListener("click", function () {
+      mensajeBase("TODO: implementar GET de personaje");
+    });
+
+    nuevaFotoBtn.addEventListener("click", function () {
+      mensajeBase("TODO: implementar GET de foto de gato");
+    });
+
+    subirBtn.addEventListener("click", function () {
+      mensajeBase("TODO: implementar POST de imagen con XHR");
+    });
+
+    subirImagenBtn.addEventListener("click", function () {
+      mensajeBase("TODO: implementar POST de imagen con jQuery");
+    });
+  </script>
+</body>
+</html>
